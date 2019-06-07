@@ -1,20 +1,20 @@
 #include "glmems.h"
 #include <iostream>
 
-#include <memory> //std::shared_ptr
-
 int main() {
-    ikkuna i;
-    ikkuna j;
+    ikkuna i,j;
     
     bool run = true;
     while(run) {
-        if(i.tarkasta() )
-            i.suorita();
-        if(j.tarkasta() )
-            j.suorita();
+        i.suorita();
+        j.suorita();
+
+        bool irun = i.tarkasta();
+        bool jrun = j.tarkasta();
         
-        if(!i.tarkasta() && !j.tarkasta() )
+        if(irun || jrun)
+            run = true;
+        else
             run = false;
     }
     return 0;
