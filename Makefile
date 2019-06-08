@@ -1,4 +1,6 @@
 SRC = src/glmems.cpp \
+src/ikkuna.cpp \
+src/buffer.cpp \
 src/main.cpp
 
 CFLAGS = -std=c++17
@@ -8,3 +10,6 @@ EXECUTABLE = glmems
 
 all:
 	g++ $(SRC) $(CFLAGS) $(LFLAGS) -o $(EXECUTABLE)
+
+clean:
+	rm $(EXECUTABLE)
