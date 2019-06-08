@@ -1,53 +1,15 @@
-#include "ikkuna.h"
-#include "buffer.h"
-#include "tekstuuri.h"
-#include "shader.h"
+#include "piirtaja.h"
 #include <iostream>
-
-
-class suorakulmio : public VAO {
-private:
-    buffer verteksiBuffer;
-    buffer uvBuffer;
-public:
-    suorakulmio() {
-        float s = 0.8;
-        std::vector<glm::vec2> verteksit = teeSuorakulmio(-s, -s, 2*s, 2*s);
-        std::vector<glm::vec2> UVt = teeSuorakulmio(0, 0, 1, 1);
-        
-        verteksiBuffer.laitaVertekseja(verteksit);
-        uvBuffer.laitaUVta(UVt);
-
-        asetaVerteksienMaara(verteksit.size() );
-    }
-    
-
-    suorakulmio(const suorakulmio& toinen) : suorakulmio() {}
-    
-};
-
-
-class suorakulmionPiirtaja : public ikkuna, public shader, public suorakulmio {
-public:
-    suorakulmionPiirtaja() {
-        shader::kayta();
-    }
-
-    
-    suorakulmionPiirtaja(const suorakulmionPiirtaja& toinen) : suorakulmionPiirtaja() {}
-};
+#include <time.h>
 
 
 int main() {
 
-    suorakulmionPiirtaja S;
+    kuvanPiirtaja P;
+    tekstuuri t("data/tux.jpg");
+    P.kaytaTekstuuria(t, 0);
     
-    bool run = true;
-    while(run) {
-        S.piirra();
-        S.suorita();
-        run = S.tarkasta();
-    }
-    
+    while(P.piirra())
+        ;    
     return 0;
 }

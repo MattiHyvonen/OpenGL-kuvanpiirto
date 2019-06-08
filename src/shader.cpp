@@ -4,6 +4,19 @@
 #include <iostream>
 
 
+int haeAktiivinenShader() {
+    if(!kontekstiOnOlemassa() ) {
+        std::cout << "  Kontekstia ei ole! \n";
+        return HUONO_TUNNUS;
+    }
+    
+    int tunnus = HUONO_TUNNUS;
+    glGetIntegerv(GL_CURRENT_PROGRAM, &tunnus);
+    return tunnus;
+}
+
+
+//HUOM. tämä ei vielä ota käyttöön luotua shaderia
 shaderPerusT::shaderPerusT(std::string vpolku, std::string fpolku) {
     std::cout << "Luodaan shader...\n";
     if(!kontekstiOnOlemassa() ) {
@@ -12,16 +25,8 @@ shaderPerusT::shaderPerusT(std::string vpolku, std::string fpolku) {
     }
     
     tunnus = loadShaders(vpolku.c_str(), fpolku.c_str());
-
-    /* Tarkasta onko hyvä:
-        GLint success = 0;
-        glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-        if(success == GL_FALSE) 
-            //epäonnistui
-            ...
-    */
     
-    std::cout << "  Luotiin shader " << tunnus << "\n";    
+    std::cout << "  Luotiin shader " << tunnus << "\n";
 }
 
 
@@ -76,5 +81,25 @@ bool shader::kayta() {
     }
     std::cout << "Käytetään shaderia " << haeTunnus() << "\n";
     glUseProgram(haeTunnus());
+        
     return true;
+}
+
+
+bool shader::asetaUniform(std::string nimi, int arvo) {
+    if(!kayta() )
+        return false;
+    std::cout << "Asetetaan uniform \"" << nimi << "\" : " << arvo << "\n";
+    glUniform1i(glGetUniformLocation(haeTunnus(), nimi.c_str() ), arvo);
+    irrotaShader();
+    return true;
+}
+
+
+void irrotaShader() {
+    if(!kontekstiOnOlemassa() )
+        return;
+
+    std::cout << "Irrotetaan shader\n";
+    glUseProgram(0);
 }

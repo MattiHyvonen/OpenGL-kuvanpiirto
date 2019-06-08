@@ -1,4 +1,4 @@
-#include "glmems.h"
+#include "GL.h"
 
 
 //Kuinka monta verteksiä voidaan enintään piirtää kerralla
@@ -98,7 +98,8 @@ public:
 
 
 //Irrota ARRAY_BUFFER:in liitokset
-void irrotaBufferit();
+void irrotaBuffer();
+void irrotaVAO();
 
 
 //Piirrä annettu Vertex Array -olio kolmioina

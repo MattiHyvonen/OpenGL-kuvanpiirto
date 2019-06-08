@@ -52,13 +52,14 @@ void VAOperusT::tuhoa() {
 /* VAO -luokka */
 
 
-//Liitetään heti, että array tulee luoduksi.
+//Liitetään ja irrotetaan heti, että array tulee luoduksi.
 VAO::VAO() {
-    liita();
+//    liita();
 }
 
 
 bool VAO::liita() {
+    std::cout << "Liitetään VAO " << haeTunnus() << "\n";
     if(!kontekstiOnOlemassa() )
         return false;
     if(haeTunnus() == HUONO_TUNNUS)
@@ -89,6 +90,7 @@ void VAO::asetaVerteksienMaara(unsigned int N) {
 
 
 bool VAO::piirra() {
+    //TODO: katso että kaikki liitetyt bufferit ovat hyvät
     piirraVAO(*this);
 }
 
@@ -142,7 +144,7 @@ void bufferPerusT::tuhoa() {
 
 
 buffer::buffer() {
-    liita();
+//    liita();
 }
 
 
@@ -176,6 +178,7 @@ bool buffer::onLiitetty() const {
 
 
 bool buffer::liita() {
+    std::cout << "Liitetään buffer " << haeTunnus() << "\n";
     if(!kontekstiOnOlemassa() )
         return false;
     if(haeTunnus() == HUONO_TUNNUS)
@@ -201,8 +204,11 @@ bool buffer::laita(const std::vector<glm::vec2>& data, int attrib) {
     glVertexAttribPointer(attrib, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), (void*)0);
     
     std::cout << "Määriteltiin verteksiattribuutti " << attrib << "\n";
-    std::cout << "Laitettiin " << data.size() << " * " << sizeof(glm::vec2) << " tavua\n";
+    std::cout   << "Laitettiin bufferiin " 
+                << data.size() << " * " << sizeof(glm::vec2) << " tavua\n";
     
+    irrotaBuffer();
+                
     return true;
 }
 
@@ -229,21 +235,29 @@ bool piirraVAO(VAO& b) {
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     
+    std::cout << "Piirretään " << b.haeVerteksienMaara() << " verteksiä\n";
+    
     glDrawArrays(GL_TRIANGLES, 0, b.haeVerteksienMaara() );
     
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(0);
     
-    irrotaBufferit();
+    irrotaVAO();
     return true;
 }
 
 
-void irrotaBufferit() {
+void irrotaBuffer() {
     if(!kontekstiOnOlemassa() )
         return;
-    
-    glBindVertexArray(0);
-    
+    std::cout << "Irrotetaan buffer\n";
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+
+void irrotaVAO() {
+    if(!kontekstiOnOlemassa() )
+        return;
+    std::cout << "Irrotetaan VAO\n";
+    glBindVertexArray(0);    
 }

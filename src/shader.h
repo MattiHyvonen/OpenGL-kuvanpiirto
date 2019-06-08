@@ -1,8 +1,11 @@
-#include "glmems.h"
+#include "GL.h"
 #include <string>
 
 const std::string OLETUS_VPOLKU = "data/default.vertexShader";
 const std::string OLETUS_FPOLKU = "data/default.fragmentShader";
+
+
+int haeAktiivinenShader();
 
 
 class shaderPerusT{
@@ -25,4 +28,8 @@ class shader : public shaderPerusT{
 public:
     bool onHyva();
     bool kayta();
+    bool asetaUniform(std::string nimi, int arvo);
 };
+
+
+void irrotaShader();

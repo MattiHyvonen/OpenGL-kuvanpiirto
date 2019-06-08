@@ -1,4 +1,4 @@
-#include "glmems.h"
+#include "GL.h"
 /* Ikkunaperustyyppi:
  *  Sisältää GLFW-ikkunan osoitteen, pystyy luomaan ja tuhoamaan sen.
  *  Luodessa alustetaan GLFW ja GLEW, jos niitä ei ole vielä alustettu.
@@ -29,7 +29,9 @@ public:
     // Kopioidessa luodaan uusi ikkuna
     ikkunaPerusT(const ikkunaPerusT& j);
     
-    //sulje ikkuna
+    //Sulje ikkuna.
+    // HUOM: Jos suljetaan erikseen tällä funktiolla,
+    // voi olla aiheellista vapauttaa muut kontekstissa olevat resurssit sitä ennen.
     void sulje();
     
     //Palauta osoite, const-versio
@@ -52,7 +54,7 @@ public:
     bool kaytaKontekstia();
     
     //Päivitä puskurit ja sulkemispyynnöt.
-    bool suorita();
+    bool toteuta();
 
     //Palauta true, jos ikkuna on käynnissä.
     // Sulje jos halutaan sulkea.

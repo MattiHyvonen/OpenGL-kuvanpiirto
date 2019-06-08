@@ -108,16 +108,23 @@ bool ikkuna::kaytaKontekstia() {
 }
 
 
-bool ikkuna::suorita() {
+bool ikkuna::toteuta() {
     if(!kaytaKontekstia() )
         return false;
     
-    //Päivitä puskurit ja sulkupyyntö
+    //Päivitä puskurit
     glfwSwapBuffers(osoite() );
-    glfwPollEvents();
     
+    //Katso eventit. Tulkitse ESCin painaminen sulkemispyyntönä.
+    glfwPollEvents();
     if(glfwGetKey(osoite(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(osoite(), true);
+
+    //Palauta false, jos halutaan sulkea.
+    if(glfwWindowShouldClose(osoite()) ) {
+        std::cout << "Käyttäjä sulki ikkunan\n";
+        return false;
+    }
     
     return true;
 }
@@ -127,9 +134,9 @@ bool ikkuna::tarkasta() {
     if(!kaytaKontekstia() )
         return false;
     
+    //Palauta false, jos ESCiä on painettu tai ikkuna on suljettu.
     if(glfwWindowShouldClose(osoite()) ) {
         std::cout << "Käyttäjä sulki ikkunan\n";
-        sulje();
         return false;
     }
     
