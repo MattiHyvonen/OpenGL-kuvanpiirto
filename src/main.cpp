@@ -1,6 +1,7 @@
 #include "ikkuna.h"
 #include "buffer.h"
 #include "tekstuuri.h"
+#include "shader.h"
 #include <iostream>
 
 
@@ -26,7 +27,15 @@ public:
 };
 
 
-class suorakulmionPiirtaja : public ikkuna, public suorakulmio {};
+class suorakulmionPiirtaja : public ikkuna, public shader, public suorakulmio {
+public:
+    suorakulmionPiirtaja() {
+        shader::kayta();
+    }
+
+    
+    suorakulmionPiirtaja(const suorakulmionPiirtaja& toinen) : suorakulmionPiirtaja() {}
+};
 
 
 int main() {

@@ -2,6 +2,7 @@ SRC = src/glmems.cpp \
 src/ikkuna.cpp \
 src/buffer.cpp \
 src/tekstuuri.cpp \
+src/shader.cpp \
 src/main.cpp
 
 CFLAGS = -std=c++17
